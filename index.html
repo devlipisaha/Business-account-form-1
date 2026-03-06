@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open a Business Bank Account – Prominence Bank</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #06101f;
+    --card:     #0b1a30;
+    --card2:    #0e2040;
+    --border:   #1b3356;
+    --border2:  #1f3d6a;
+    --cyan:     #29c6e8;
+    --cyan2:    #1fa8c8;
+    --cyan-glow:rgba(41,198,232,.18);
+    --cyan-sub: rgba(41,198,232,.07);
+    --topbar:   #1256a8;
+    --hdr:      #081526;
+    --white:    #ffffff;
+    --w90:      rgba(255,255,255,.9);
+    --w70:      rgba(255,255,255,.7);
+    --w40:      rgba(255,255,255,.4);
+    --muted:    #6d90b4;
+    --dim:      #3d5978;
+    --error:    #f06060;
+    --ok:       #2dd4bf;
+    --r:        10px;
+    --r2:       6px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--white);min-height:100vh;
+    background-image:
+      radial-gradient(ellipse 900px 500px at 50% 0,rgba(41,198,232,.07) 0%,transparent 70%),
+      radial-gradient(ellipse 600px 400px at 90% 70%,rgba(18,86,168,.1) 0%,transparent 60%);
+  }
+  .topbar{background:var(--topbar);padding:7px 36px;display:flex;align-items:center;gap:24px;font-size:.74rem;color:rgba(255,255,255,.88)}
+  .ti{display:flex;align-items:center;gap:6px}
+  .tic{width:16px;height:16px;background:rgba(255,255,255,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.55rem;flex-shrink:0}
+  .hdr{background:var(--hdr);border-bottom:1px solid var(--border);padding:0 36px;display:flex;align-items:center;justify-content:space-between;height:68px;position:sticky;top:0;z-index:100;box-shadow:0 4px 28px rgba(0,0,0,.5)}
+  .logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+  .logo-box{width:42px;height:42px;background:linear-gradient(140deg,#1565c0,#0d3b8a);border-radius:8px;border:1px solid rgba(41,198,232,.35);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+  .logo-box::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 35% 30%,rgba(41,198,232,.35),transparent 65%)}
+  .ldots{display:grid;grid-template-columns:repeat(4,5px);gap:2.5px;position:relative;z-index:1}
+  .ld{width:5px;height:5px;border-radius:50%;background:var(--cyan)}
+  .ld:nth-child(1){opacity:.95}.ld:nth-child(2){opacity:.75}.ld:nth-child(3){opacity:.55}.ld:nth-child(4){opacity:.3}
+  .ld:nth-child(5){opacity:.8}.ld:nth-child(6){opacity:.6}.ld:nth-child(7){opacity:.35}.ld:nth-child(8){opacity:.15}
+  .lname{display:flex;flex-direction:column;line-height:1.1}
+  .lname span:first-child{font-family:'Cormorant Garamond',serif;font-size:1.18rem;font-weight:700;color:var(--white);letter-spacing:.1em;text-transform:uppercase}
+  .lname span:last-child{font-size:.58rem;font-weight:500;color:var(--cyan);letter-spacing:.26em;text-transform:uppercase}
+  .hbtn{background:transparent;border:1px solid var(--cyan);color:var(--cyan);padding:8px 18px;border-radius:var(--r2);font-size:.8rem;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:all .2s;letter-spacing:.05em}
+  .hbtn:hover{background:var(--cyan);color:var(--bg)}
+  .shell{max-width:980px;margin:44px auto 80px;padding:0 18px}
+  .phead{text-align:center;margin-bottom:34px}
+  .eyebrow{font-size:.68rem;font-weight:600;color:var(--cyan);letter-spacing:.3em;text-transform:uppercase;margin-bottom:10px}
+  .phead h1{font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:700;color:var(--white);letter-spacing:.02em}
+  .hline{width:52px;height:2px;background:linear-gradient(90deg,var(--cyan),transparent);margin:14px auto 0}
+  .frame{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px rgba(41,198,232,.05),0 28px 70px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.03)}
+  .snav{display:flex;background:#060f1c;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none;padding:0 6px}
+  .snav::-webkit-scrollbar{display:none}
+  .stab{display:flex;align-items:center;gap:8px;padding:17px 14px;white-space:nowrap;font-size:.74rem;font-weight:500;color:var(--dim);cursor:default;border-bottom:2px solid transparent;transition:all .2s;user-select:none;letter-spacing:.04em}
+  .stab.active{color:var(--cyan);border-bottom-color:var(--cyan);background:linear-gradient(180deg,transparent,rgba(41,198,232,.04))}
+  .stab.done{color:var(--ok);cursor:pointer}
+  .stab.done:hover{color:var(--cyan)}
+  .sbadge{width:21px;height:21px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid var(--border2);color:var(--muted);font-size:.66rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+  .stab.active .sbadge{background:var(--cyan);border-color:var(--cyan);color:var(--bg);box-shadow:0 0 10px rgba(41,198,232,.5)}
+  .stab.done .sbadge{background:var(--ok);border-color:var(--ok);color:var(--bg)}
+  .stab.done .sbadge::before{content:'✓';font-size:.65rem}
+  .stab.done .snum{display:none}
+  .prog{background:#060f1c;padding:11px 28px 15px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:20px}
+  .pmeta{display:flex;flex-direction:column;gap:2px;min-width:136px}
+  .pstep{font-size:.74rem;font-weight:600;color:var(--w90);letter-spacing:.04em}
+  .ppct{font-size:.68rem;color:var(--cyan);font-weight:500}
+  .ptrack{flex:1;height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
+  .pbar{height:100%;background:linear-gradient(90deg,var(--cyan2),var(--cyan));border-radius:2px;transition:width .5s cubic-bezier(.4,0,.2,1);box-shadow:0 0 8px rgba(41,198,232,.45)}
+  .sbody{padding:34px 38px 38px}
+  .sttl{font-family:'Cormorant Garamond',serif;font-size:1.38rem;font-weight:700;color:var(--white);margin-bottom:6px;letter-spacing:.02em}
+  .sdesc{font-size:.83rem;color:var(--muted);line-height:1.65;font-weight:300;margin-bottom:26px}
+  .slbl{font-size:.66rem;font-weight:600;color:var(--cyan);letter-spacing:.26em;text-transform:uppercase;margin:26px 0 15px;display:flex;align-items:center;gap:10px}
+  .slbl::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+  .g{display:grid;gap:16px 22px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:1fr 1fr 1fr}
+  .g1{grid-template-columns:1fr}
+  .s2{grid-column:span 2}
+  .s3{grid-column:span 3}
+  .fld{display:flex;flex-direction:column;gap:5px}
+  .flbl{font-size:.72rem;font-weight:600;color:var(--w70);letter-spacing:.06em;text-transform:uppercase}
+  .flbl .req{color:var(--cyan);margin-left:3px}
+  .fld input,.fld select,.fld textarea{background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:var(--r2);padding:11px 13px;font-size:.87rem;font-family:'DM Sans',sans-serif;color:var(--white);outline:none;width:100%;transition:all .18s;-webkit-appearance:none}
+  .fld select option{background:#0b1a30;color:var(--white)}
+  .fld input::placeholder,.fld textarea::placeholder{color:var(--dim)}
+  .fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--cyan);background:rgba(41,198,232,.04);box-shadow:0 0 0 3px rgba(41,198,232,.1)}
+  .fld input.ve,.fld select.ve{border-color:var(--error)}
+  .fld.ferr .flbl{color:var(--error)}
+  .emsg{font-size:.7rem;color:var(--error);display:none;margin-top:1px}
+  .fld.ferr .emsg{display:block}
+  .fld textarea{resize:vertical;min-height:88px}
+  .agrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:13px;margin-top:4px}
+  .acard{border:1px solid var(--border2);border-radius:var(--r);padding:19px 16px;cursor:pointer;transition:all .22s;background:rgba(255,255,255,.02);position:relative;overflow:hidden}
+  .acard::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--cyan-sub),transparent);opacity:0;transition:opacity .22s}
+  .acard:hover{border-color:rgba(41,198,232,.4)}
+  .acard:hover::before{opacity:1}
+  .acard.sel{border-color:var(--cyan);background:rgba(41,198,232,.06);box-shadow:0 0 22px rgba(41,198,232,.14),inset 0 0 18px rgba(41,198,232,.03)}
+  .acard.sel::before{opacity:1}
+  .acard input[type=radio]{position:absolute;opacity:0;pointer-events:none}
+  .ario{width:17px;height:17px;border:1.5px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:11px;transition:all .2s}
+  .acard.sel .ario{border-color:var(--cyan);box-shadow:0 0 8px rgba(41,198,232,.4)}
+  .acard.sel .ario::after{content:'';width:7px;height:7px;border-radius:50%;background:var(--cyan);display:block;box-shadow:0 0 5px var(--cyan)}
+  .aname{font-weight:600;font-size:.88rem;color:var(--white);margin-bottom:5px}
+  .adesc{font-size:.76rem;color:var(--muted);line-height:1.5;font-weight:300;margin-bottom:8px}
+  .afee{display:inline-block;font-size:.69rem;font-weight:600;color:var(--cyan);background:rgba(41,198,232,.1);border:1px solid rgba(41,198,232,.22);padding:2px 8px;border-radius:20px;letter-spacing:.04em}
+  #acerr{font-size:.75rem;color:var(--error);display:none;margin-top:8px}
+  .upz{border:1px dashed var(--border2);border-radius:var(--r);padding:26px 20px;text-align:center;cursor:pointer;transition:all .2s;position:relative;background:rgba(255,255,255,.02)}
+  .upz:hover{border-color:var(--cyan);background:rgba(41,198,232,.03)}
+  .upz input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+  .upico{font-size:1.6rem;margin-bottom:8px;display:block;filter:drop-shadow(0 0 7px rgba(41,198,232,.35))}
+  .upcta{font-size:.82rem;color:var(--muted);line-height:1.5}
+  .upcta strong{color:var(--cyan)}
+  .uphint{font-size:.68rem;color:var(--dim);margin-top:3px}
+  .updone{margin-top:8px;font-size:.77rem;color:var(--ok);display:none}
+  .ibox{background:rgba(41,198,232,.05);border:1px solid rgba(41,198,232,.16);border-left:3px solid var(--cyan);border-radius:0 var(--r2) var(--r2) 0;padding:13px 17px;font-size:.81rem;color:var(--muted);line-height:1.65;margin-top:16px}
+  .ibox strong{color:var(--cyan)}
+  .rb{margin-bottom:20px}
+  .rbt{font-size:.65rem;font-weight:600;color:var(--cyan);letter-spacing:.22em;text-transform:uppercase;margin-bottom:11px;display:flex;align-items:center;gap:9px}
+  .rbt::after{content:'';flex:1;height:1px;background:var(--border)}
+  .rg{display:grid;grid-template-columns:1fr 1fr;gap:9px 22px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:var(--r2);padding:15px 18px}
+  .ri dt{font-size:.68rem;color:var(--dim);text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px}
+  .ri dd{font-size:.86rem;color:var(--w90);font-weight:500}
+  .fnav{display:flex;align-items:center;justify-content:space-between;margin-top:34px;padding-top:22px;border-top:1px solid var(--border);flex-wrap:wrap;gap:12px}
+  .nleft{display:flex;align-items:center;gap:14px}
+  .btn{display:inline-flex;align-items:center;gap:7px;padding:11px 26px;border-radius:var(--r2);font-size:.87rem;font-family:'DM Sans',sans-serif;font-weight:600;cursor:pointer;border:none;transition:all .2s;letter-spacing:.04em;text-decoration:none}
+  .btn:active{transform:scale(.97)}
+  .btn-p{background:linear-gradient(135deg,var(--cyan2),var(--cyan));color:#060f1c;box-shadow:0 4px 18px rgba(41,198,232,.3)}
+  .btn-p:hover{box-shadow:0 6px 26px rgba(41,198,232,.45);transform:translateY(-1px)}
+  .btn-b{background:rgba(255,255,255,.06);color:var(--w70);border:1px solid var(--border2)}
+  .btn-b:hover{background:rgba(255,255,255,.1);color:var(--white)}
+  .btn-sv{background:transparent;color:var(--muted);padding:11px 4px;font-size:.8rem;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--dim);cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:color .18s}
+  .btn-sv:hover{color:var(--cyan)}
+  .btn-sub{background:linear-gradient(135deg,var(--cyan2),var(--cyan));color:#060f1c;padding:13px 34px;font-size:.93rem;box-shadow:0 4px 22px rgba(41,198,232,.32)}
+  .btn-sub:hover{box-shadow:0 8px 30px rgba(41,198,232,.5);transform:translateY(-2px)}
+  .sw{text-align:center;padding:60px 28px}
+  .sring{width:76px;height:76px;border-radius:50%;border:2px solid var(--ok);display:flex;align-items:center;justify-content:center;margin:0 auto 22px;font-size:1.9rem;box-shadow:0 0 30px rgba(45,212,191,.22);animation:sp 2.5s ease infinite}
+  @keyframes sp{0%,100%{box-shadow:0 0 20px rgba(45,212,191,.18)}50%{box-shadow:0 0 40px rgba(45,212,191,.38)}}
+  .sttl2{font-family:'Cormorant Garamond',serif;font-size:1.75rem;font-weight:700;color:var(--white);margin-bottom:11px}
+  .smsg{font-size:.88rem;color:var(--muted);max-width:440px;margin:0 auto;line-height:1.72;font-weight:300}
+  .sref{display:inline-block;margin-top:22px;background:rgba(41,198,232,.08);border:1px solid rgba(41,198,232,.2);color:var(--cyan);padding:8px 20px;border-radius:20px;font-size:.8rem;font-weight:600;letter-spacing:.09em}
+  .ft{text-align:center;padding:22px;font-size:.72rem;color:var(--dim);border-top:1px solid var(--border)}
+  @media(max-width:720px){
+    .topbar{display:none}.hdr{padding:0 16px}.shell{padding:0 10px;margin-top:24px}.sbody{padding:22px 18px 26px}
+    .g2,.g3{grid-template-columns:1fr}.s2,.s3{grid-column:span 1}.rg{grid-template-columns:1fr}
+    .phead h1{font-size:1.55rem}.prog{flex-direction:column;align-items:flex-start;gap:9px}.ptrack{width:100%}
+  }
+  @media(max-width:480px){.stab .slabel{display:none}.stab{padding:13px 9px}.agrid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="ti"><div class="tic">☎</div>+44 20 8895 6493</div>
+  <div class="ti"><div class="tic">⬡</div>KTT TELEX (051) 210567 PROMIN G</div>
+  <div class="ti"><div class="tic">⊕</div>Diplomatic Jurisdiction – Foreign Trade Mission Office (ETMO)</div>
+</div>
+
+<header class="hdr">
+  <a class="logo" href="https://prominencebank.com">
+    <div class="logo-box">
+      <div class="ldots">
+        <div class="ld"></div><div class="ld"></div><div class="ld"></div><div class="ld"></div>
+        <div class="ld"></div><div class="ld"></div><div class="ld"></div><div class="ld"></div>
+      </div>
+    </div>
+    <div class="lname"><span>Prominence</span><span>Bank</span></div>
+  </a>
+  <button class="hbtn" onclick="window.location='https://my-account.prominencebank.com/login'">Client Login</button>
+</header>
+
+<div class="shell">
+  <div class="phead">
+    <div class="eyebrow">Corporate Account Opening</div>
+    <h1>Open a Business Bank Account</h1>
+    <div class="hline"></div>
+  </div>
+
+  <div class="frame">
+    <nav class="snav" id="snav"></nav>
+    <div class="prog">
+      <div class="pmeta">
+        <span class="pstep" id="pstep">Step 1 of 8</span>
+        <span class="ppct" id="ppct">12% Complete</span>
+      </div>
+      <div class="ptrack"><div class="pbar" id="pbar" style="width:12%"></div></div>
+    </div>
+    <div class="sbody" id="sbody"></div>
+  </div>
+</div>
+
+<footer class="ft">© 2025 Prominence Bank · Diplomatic Jurisdiction – Foreign Trade Mission Office (ETMO) · All rights reserved.</footer>
+
+<script>
+const STEPS=['Account Type','Company Details','Directors & UBOs','Address & Contact','Transaction Profile','Source of Funds','KYC Uploads','Review & Submit'];
+const S={cur:0,done:[],d:{}};
+
+function rNav(){
+  document.getElementById('snav').innerHTML=STEPS.map((l,i)=>{
+    let c='stab';if(i===S.cur)c+=' active';else if(S.done.includes(i))c+=' done';
+    const go=S.done.includes(i)?`onclick="gTo(${i})"`:'';
+    return `<div class="${c}" ${go}><span class="sbadge"><span class="snum">${i+1}</span></span><span class="slabel">${l}</span></div>`;
+  }).join('');
+}
+function rProg(){
+  const p=Math.round(((S.cur+1)/STEPS.length)*100);
+  document.getElementById('pstep').textContent=`Step ${S.cur+1} of ${STEPS.length}`;
+  document.getElementById('ppct').textContent=`${p}% Complete`;
+  document.getElementById('pbar').style.width=p+'%';
+}
+function rStep(){
+  const b=document.getElementById('sbody');
+  [s0,s1,s2,s3,s4,s5,s6,s7][S.cur](b);
+  b.querySelectorAll('input:not([type=radio]):not([type=file]),select,textarea').forEach(el=>{if(el.id&&S.d[el.id]!==undefined)el.value=S.d[el.id];});
+}
+
+/* STEP 0 */
+function s0(b){
+  b.innerHTML=`
+    <div class="sttl">Select Account Type</div>
+    <div class="sdesc">Choose the corporate banking product you wish to open. All accounts are subject to full compliance and KYC review.</div>
+    <div class="fld" style="max-width:420px;margin-bottom:22px">
+      <label class="flbl">Application ID <span class="req">*</span></label>
+      <input type="text" id="f_app_id" placeholder="Enter your assigned Application ID">
+      <span class="emsg">Application ID is required.</span>
+    </div>
+    <div class="slbl">Select Account Type</div>
+    <div class="agrid">
+      ${ac('savings','Savings Account','Corporate savings with KTT transaction capability.','€25,000')}
+      ${ac('custody','Custody Account','Secure corporate asset safekeeping services.','€25,000')}
+      ${ac('numbered','Numbered Account','Anonymous coded account — highest privacy level.','€50,000')}
+      ${ac('crypto','Cryptocurrency Account','Dedicated digital asset corporate account.','€25,000')}
+    </div>
+    <div id="acerr">Please select an account type to continue.</div>
+    <div class="ibox"><strong>KTT Eligibility:</strong> Savings, Custody, and Numbered Accounts support <strong>Key Tested Telex (KTT)</strong> transactions for high-value international corporate wire transfers.</div>
+    ${nh(false,true)}`;
+  rcCards();b.querySelectorAll('.acard').forEach(c=>c.addEventListener('click',()=>pickC(c)));
+}
+
+/* STEP 1 */
+function s1(b){
+  b.innerHTML=`
+    <div class="sttl">Company Details</div>
+    <div class="sdesc">Provide the registered details of your business entity exactly as they appear on official incorporation documents.</div>
+    <div class="g g2">
+      ${fs('f_company_name','Registered Company Name','text',2,true)}
+      ${f('f_company_type','Legal Structure','text',true,'e.g. Ltd, LLC, PLC, Corp')}
+      ${f('f_reg_number','Company Registration Number','text',true)}
+      ${f('f_reg_country','Country of Incorporation','text',true)}
+      ${f('f_reg_date','Date of Incorporation','date',true)}
+      ${f('f_tax_id','Tax ID / VAT Number','text')}
+      ${f('f_industry','Industry / Business Activity','text',true)}
+      ${f('f_num_employees','Number of Employees','number')}
+      ${fs('f_business_desc','Describe your primary business activities','text',2,true)}
+      ${f('f_website','Company Website','url',false,'https://')}
+    </div>
+    ${nh(true,true)}`;
+}
+
+/* STEP 2 */
+function s2(b){
+  b.innerHTML=`
+    <div class="sttl">Directors & Ultimate Beneficial Owners</div>
+    <div class="sdesc">Provide details of all directors and any beneficial owners holding 25% or more ownership in the company.</div>
+    <div class="slbl">Authorised Director / Signatory</div>
+    <div class="g g3">
+      ${f('f_dir_first','First Name','text',true)}
+      ${f('f_dir_middle','Middle Name','text')}
+      ${f('f_dir_last','Last Name','text',true)}
+      ${f('f_dir_dob','Date of Birth','date',true)}
+      ${f('f_dir_nationality','Nationality','text',true)}
+      ${f('f_dir_passport','Passport / ID Number','text',true)}
+      ${f('f_dir_issue','Date of Issue','date',true)}
+      ${f('f_dir_exp','Expiration Date','date',true)}
+      ${f('f_dir_country_issue','Country of Issue','text',true)}
+      ${f('f_dir_position','Position / Title','text',true,'e.g. CEO, Director')}
+      ${f('f_dir_email','Email Address','email',true)}
+      ${f('f_dir_mobile','Mobile Number','tel',true)}
+    </div>
+    <div class="slbl">Ultimate Beneficial Owner (UBO) — if different from Director</div>
+    <div class="g g3">
+      ${f('f_ubo_first','First Name','text')}
+      ${f('f_ubo_middle','Middle Name','text')}
+      ${f('f_ubo_last','Last Name','text')}
+      ${f('f_ubo_dob','Date of Birth','date')}
+      ${f('f_ubo_nationality','Nationality','text')}
+      ${f('f_ubo_passport','Passport / ID Number','text')}
+      ${f('f_ubo_ownership','Ownership Percentage','text',false,'e.g. 50%')}
+      ${f('f_ubo_country','Country of Issue','text')}
+    </div>
+    ${nh(true,true)}`;
+}
+
+/* STEP 3 */
+function s3(b){
+  b.innerHTML=`
+    <div class="sttl">Address & Contact</div>
+    <div class="sdesc">Provide the registered and operational address of your company along with primary contact information.</div>
+    <div class="slbl">Registered Business Address</div>
+    <div class="g g2">
+      ${fs('f_reg_address','Registered Address Line 1','text',2,true)}
+      ${f('f_reg_address2','Address Line 2','text')}
+      ${f('f_reg_city','City','text')}
+      ${f('f_reg_state','State / Province','text')}
+      ${f('f_reg_zip','ZIP / Postal Code','text')}
+      ${f('f_reg_country','Country','text',true)}
+    </div>
+    <div class="slbl">Company Contact Information</div>
+    <div class="g g2">
+      ${f('f_co_email','Company Email','email',true)}
+      ${f('f_co_email_confirm','Confirm Company Email','email',true)}
+      ${f('f_co_phone','Company Phone','tel',true)}
+      ${f('f_co_telephone','Telephone Number','tel')}
+      ${f('f_co_fax','Fax Number','tel')}
+    </div>
+    ${nh(true,true)}`;
+}
+
+/* STEP 4 */
+function s4(b){
+  b.innerHTML=`
+    <div class="sttl">Transaction Profile</div>
+    <div class="sdesc">Describe the expected transaction activity for your corporate account to assist our compliance team.</div>
+    <div class="g g2">
+      ${fs('f_countries_out','Main countries for outgoing transfers','text',2)}
+      ${fs('f_countries_in','Main countries for incoming transfers','text',2)}
+      ${f('f_num_out','Est. outgoing transfers / month','number')}
+      ${f('f_num_in','Est. incoming transfers / month','number')}
+      ${f('f_avg_val','Average transfer value','text')}
+      ${f('f_max_val','Maximum transfer value','text')}
+      ${f('f_currency_fund','Currency of initial funding','text')}
+      ${f('f_account_currency','Account Currency','text',true)}
+      ${fs('f_account_name_ref','Account reference name (optional)','text',2)}
+    </div>
+    ${nh(true,true)}`;
+}
+
+/* STEP 5 */
+function s5(b){
+  b.innerHTML=`
+    <div class="sttl">Source of Funds</div>
+    <div class="sdesc">Provide full details about the origin of business funds for initial account funding and the account opening fee.</div>
+    <div class="slbl">Initial Funding Details</div>
+    <div class="g g2">
+      ${f('f_source_desc','Source of initial funding','text')}
+      ${f('f_init_value','Value of initial funding','text')}
+      ${f('f_orig_bank_name','Originating bank name','text')}
+      ${fs('f_orig_bank_addr','Originating bank address','text',2)}
+      ${f('f_acct_name','Account name','text')}
+      ${f('f_acct_number','Account number','text')}
+      ${f('f_signatory_name','Signatory full name','text')}
+    </div>
+    <div class="fld" style="margin-top:4px">
+      <label class="flbl">Describe precisely how these funds were generated</label>
+      <textarea id="f_funds_desc" placeholder="Provide a detailed description of the source and generation of these business funds…"></textarea>
+    </div>
+    <div class="slbl">Fee Payment Bank Details</div>
+    <div class="g g2">
+      ${f('f_fee_bank_name','Bank name','text')}
+      ${fs('f_fee_bank_addr','Bank address','text',2)}
+      ${f('f_fee_swift','SWIFT / BIC code','text')}
+      ${f('f_fee_holder','Account holder name','text')}
+      ${f('f_fee_acct_num','Account number','text')}
+      ${f('f_fee_signatory','Account signatory name','text')}
+    </div>
+    <div class="fld" style="margin-top:4px">
+      <label class="flbl">Describe the origin of deposit funds</label>
+      <textarea id="f_deposit_desc" placeholder="Provide details on the origin of the funds being deposited…"></textarea>
+    </div>
+    <div class="slbl">Referral</div>
+    <div class="g g1" style="max-width:400px">${f('f_recommended_by','Recommended by','text')}</div>
+    ${nh(true,true)}`;
+}
+
+/* STEP 6 */
+function s6(b){
+  b.innerHTML=`
+    <div class="sttl">KYC / AML Document Uploads</div>
+    <div class="sdesc">Upload clear, valid, full-colour copies of all required corporate and identity documents.</div>
+    <div class="ibox" style="margin-bottom:22px"><strong>Documentation Notice:</strong> All documents must be clear, valid and in full colour. Prominence Bank may request additional documentation or enhanced due diligence at any time. Incomplete information may delay or prevent account opening.</div>
+    <div class="g g2">
+      <div class="fld">
+        <label class="flbl">Director Passport / ID (Full Colour) <span class="req">*</span></label>
+        <div class="upz"><input type="file" id="f_dir_passport_doc" accept="image/*,.pdf" onchange="fC('f_dir_passport_doc','dp_done')">
+          <span class="upico">🛂</span><div class="upcta"><strong>Click to upload</strong> or drag &amp; drop</div>
+          <div class="uphint">JPEG, PNG or PDF · Maximum 10 MB</div><div class="updone" id="dp_done"></div></div>
+        <span class="emsg" id="dp_err">Director passport / ID upload is required.</span>
+      </div>
+      <div class="fld">
+        <label class="flbl">Certificate of Incorporation <span class="req">*</span></label>
+        <div class="upz"><input type="file" id="f_cert_inc" accept="image/*,.pdf" onchange="fC('f_cert_inc','ci_done')">
+          <span class="upico">🏢</span><div class="upcta"><strong>Click to upload</strong> or drag &amp; drop</div>
+          <div class="uphint">JPEG, PNG or PDF · Maximum 10 MB</div><div class="updone" id="ci_done"></div></div>
+        <span class="emsg" id="ci_err">Certificate of Incorporation is required.</span>
+      </div>
+      <div class="fld">
+        <label class="flbl">Memorandum &amp; Articles of Association</label>
+        <div class="upz"><input type="file" id="f_moa" accept="image/*,.pdf" onchange="fC('f_moa','moa_done')">
+          <span class="upico">📋</span><div class="upcta"><strong>Click to upload</strong> or drag &amp; drop</div>
+          <div class="uphint">JPEG, PNG or PDF · Maximum 10 MB</div><div class="updone" id="moa_done"></div></div>
+      </div>
+      <div class="fld">
+        <label class="flbl">Proof of Business Address</label>
+        <div class="upz"><input type="file" id="f_addr_proof" accept="image/*,.pdf" onchange="fC('f_addr_proof','ap_done')">
+          <span class="upico">🏠</span><div class="upcta"><strong>Click to upload</strong> or drag &amp; drop</div>
+          <div class="uphint">JPEG, PNG or PDF · Maximum 10 MB</div><div class="updone" id="ap_done"></div></div>
+      </div>
+    </div>
+    ${nh(true,true)}`;
+}
+
+/* STEP 7 */
+function s7(b){
+  const d=S.d;
+  const v=k=>d[k]||`<span style="color:var(--dim);font-style:italic">Not provided</span>`;
+  b.innerHTML=`
+    <div class="sttl">Review & Submit</div>
+    <div class="sdesc">Carefully review all details before submitting. Click any completed step above to make corrections.</div>
+    <div class="rb"><div class="rbt">Account Type</div><div class="rg">
+      <dl class="ri"><dt>Application ID</dt><dd>${v('f_app_id')}</dd></dl>
+      <dl class="ri"><dt>Account Type</dt><dd>${d.account_type?(d.account_type[0].toUpperCase()+d.account_type.slice(1)+' Account'):v('account_type')}</dd></dl>
+    </div></div>
+    <div class="rb"><div class="rbt">Company Details</div><div class="rg">
+      <dl class="ri"><dt>Company Name</dt><dd>${v('f_company_name')}</dd></dl>
+      <dl class="ri"><dt>Legal Structure</dt><dd>${v('f_company_type')}</dd></dl>
+      <dl class="ri"><dt>Registration No.</dt><dd>${v('f_reg_number')}</dd></dl>
+      <dl class="ri"><dt>Country of Incorporation</dt><dd>${v('f_reg_country')}</dd></dl>
+      <dl class="ri"><dt>Industry</dt><dd>${v('f_industry')}</dd></dl>
+      <dl class="ri"><dt>Tax ID / VAT</dt><dd>${v('f_tax_id')}</dd></dl>
+    </div></div>
+    <div class="rb"><div class="rbt">Director / Authorised Signatory</div><div class="rg">
+      <dl class="ri"><dt>Full Name</dt><dd>${[d.f_dir_first,d.f_dir_middle,d.f_dir_last].filter(Boolean).join(' ')||'—'}</dd></dl>
+      <dl class="ri"><dt>Position</dt><dd>${v('f_dir_position')}</dd></dl>
+      <dl class="ri"><dt>Email</dt><dd>${v('f_dir_email')}</dd></dl>
+      <dl class="ri"><dt>Nationality</dt><dd>${v('f_dir_nationality')}</dd></dl>
+    </div></div>
+    <div class="rb"><div class="rbt">Address & Contact</div><div class="rg">
+      <dl class="ri"><dt>Registered Address</dt><dd>${[d.f_reg_address,d.f_reg_city,d.f_reg_country].filter(Boolean).join(', ')||'—'}</dd></dl>
+      <dl class="ri"><dt>Company Email</dt><dd>${v('f_co_email')}</dd></dl>
+      <dl class="ri"><dt>Phone</dt><dd>${v('f_co_phone')}</dd></dl>
+    </div></div>
+    <div class="rb"><div class="rbt">Transaction Profile</div><div class="rg">
+      <dl class="ri"><dt>Account Currency</dt><dd>${v('f_account_currency')}</dd></dl>
+      <dl class="ri"><dt>Funding Currency</dt><dd>${v('f_currency_fund')}</dd></dl>
+      <dl class="ri"><dt>Outgoing / Month</dt><dd>${v('f_num_out')}</dd></dl>
+      <dl class="ri"><dt>Incoming / Month</dt><dd>${v('f_num_in')}</dd></dl>
+    </div></div>
+    <div class="rb"><div class="rbt">KYC Documents</div><div class="rg">
+      <dl class="ri"><dt>Director Passport</dt><dd>${d.f_dir_passport_doc||'—'}</dd></dl>
+      <dl class="ri"><dt>Certificate of Incorporation</dt><dd>${d.f_cert_inc||'—'}</dd></dl>
+    </div></div>
+    <div class="ibox">By submitting this application I confirm all information provided is accurate and complete to the best of my knowledge. I understand that <strong>payment of the Account Opening Fee does not guarantee approval or account opening</strong>. Prominence Bank reserves the right to request additional documentation at any time.</div>
+    <div class="fnav">
+      <div class="nleft">
+        <button class="btn btn-b" onclick="prev()">← Back</button>
+        <button class="btn-sv" onclick="saveLater()">Save &amp; Continue Later</button>
+      </div>
+      <button class="btn btn-sub" onclick="doSubmit()">Submit Application →</button>
+    </div>`;
+}
+
+/* HELPERS */
+function f(id,lbl,type,req,ph=''){const r=req?'<span class="req">*</span>':'';return `<div class="fld" id="w_${id}"><label class="flbl">${lbl} ${r}</label><input type="${type}" id="${id}" placeholder="${ph}"><span class="emsg">This field is required.</span></div>`;}
+function fs(id,lbl,type,span,req,ph=''){const r=req?'<span class="req">*</span>':'';return `<div class="fld s${span}" id="w_${id}"><label class="flbl">${lbl} ${r}</label><input type="${type}" id="${id}" placeholder="${ph}"><span class="emsg">This field is required.</span></div>`;}
+function ac(val,name,desc,fee){return `<div class="acard" data-v="${val}"><input type="radio" name="at" value="${val}"><div class="ario"></div><div class="aname">${name}</div><div class="adesc">${desc}</div><span class="afee">${fee} opening fee</span></div>`;}
+function nh(back,next){return `<div class="fnav"><div class="nleft">${back?`<button class="btn btn-b" onclick="prev()">← Back</button>`:'<span></span>'}<button class="btn-sv" onclick="saveLater()">Save &amp; Continue Later</button></div>${next?`<button class="btn btn-p" onclick="nxt()">Continue →</button>`:''}</div>`;}
+function pickC(c){document.querySelectorAll('.acard').forEach(x=>x.classList.remove('sel'));c.classList.add('sel');c.querySelector('input').checked=true;document.getElementById('acerr').style.display='none';}
+function rcCards(){if(S.d.account_type){const c=document.querySelector(`.acard[data-v="${S.d.account_type}"]`);if(c){c.classList.add('sel');c.querySelector('input').checked=true;}}}
+function fC(id,did){const fi=document.getElementById(id);const dd=document.getElementById(did);if(fi.files&&fi.files[0]){S.d[id]=fi.files[0].name;dd.textContent='✓ '+fi.files[0].name;dd.style.display='block';}}
+
+/* COLLECT */
+function collect(){
+  document.querySelectorAll('#sbody input:not([type=radio]):not([type=file]),#sbody select,#sbody textarea').forEach(el=>{if(el.id)S.d[el.id]=el.value;});
+  if(S.cur===0){const c=document.querySelector('.acard.sel');if(c)S.d.account_type=c.dataset.v;}
+}
+
+/* VALIDATE */
+const REQ={0:['f_app_id'],1:['f_company_name','f_company_type','f_reg_number','f_reg_country','f_reg_date','f_industry','f_business_desc'],2:['f_dir_first','f_dir_last','f_dir_dob','f_dir_nationality','f_dir_passport','f_dir_issue','f_dir_exp','f_dir_country_issue','f_dir_position','f_dir_email','f_dir_mobile'],3:['f_reg_address','f_reg_country','f_co_email','f_co_email_confirm','f_co_phone'],4:['f_account_currency'],5:[],6:[],7:[]};
+function validate(){
+  let ok=true;
+  if(S.cur===0){
+    if(!document.querySelector('.acard.sel')){document.getElementById('acerr').style.display='block';ok=false;}
+    const a=document.getElementById('f_app_id');if(a&&!a.value.trim()){mErr(a);ok=false;}
+    return ok;
+  }
+  if(S.cur===6){
+    if(!S.d.f_dir_passport_doc){document.getElementById('dp_err').style.display='block';ok=false;}
+    if(!S.d.f_cert_inc){document.getElementById('ci_err').style.display='block';ok=false;}
+    return ok;
+  }
+  (REQ[S.cur]||[]).forEach(id=>{const el=document.getElementById(id);if(el&&!el.value.trim()){mErr(el);ok=false;}});
+  if(S.cur===3){const e1=document.getElementById('f_co_email'),e2=document.getElementById('f_co_email_confirm');if(e1&&e2&&e1.value&&e2.value&&e1.value!==e2.value){mErr(e2,'Email addresses do not match.');ok=false;}}
+  return ok;
+}
+function mErr(el,msg){el.classList.add('ve');const w=el.closest('.fld');if(w){w.classList.add('ferr');if(msg){const m=w.querySelector('.emsg');if(m)m.textContent=msg;}}}
+
+/* NAVIGATION */
+function nxt(){collect();if(!validate())return;if(!S.done.includes(S.cur))S.done.push(S.cur);S.cur++;render();toTop();}
+function prev(){collect();S.cur--;render();toTop();}
+function gTo(i){collect();S.cur=i;render();toTop();}
+function render(){rNav();rProg();rStep();}
+function toTop(){document.querySelector('.frame').scrollIntoView({behavior:'smooth',block:'start'});}
+function saveLater(){collect();alert('Your progress has been saved. You may return to complete your application at any time.');}
+function doSubmit(){
+  collect();
+  document.querySelector('.prog').style.display='none';
+  document.getElementById('snav').innerHTML='';
+  document.getElementById('sbody').innerHTML=`<div class="sw"><div class="sring">✓</div><div class="sttl2">Application Submitted</div><p class="smsg">Thank you for your corporate account application with Prominence Bank.<br><br>Our compliance team will review your application and contact the authorised director at <strong style="color:var(--white)">${S.d.f_co_email||S.d.f_dir_email||'your registered email'}</strong> within 2–3 business days.</p><div class="sref">Reference: ${S.d.f_app_id||'PB-BIZ-'+Date.now()}</div></div>`;
+}
+
+render();
+</script>
+</body>
+</html>
